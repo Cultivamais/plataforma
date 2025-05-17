@@ -1,0 +1,12 @@
+{
+  "name": "hakamt2025.cultivamais",
+  "displayName": "hakamt2025",
+  "version": "1.0.0",
+  "description": "hakamt2025",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CronApp IDE",
+  "license": "Apache-2.0"
+}
