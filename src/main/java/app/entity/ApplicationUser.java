@@ -1,13 +1,18 @@
+
 package app.entity;
 
 import java.io.*;
 import jakarta.persistence.*;
 import java.util.*;
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import cronapi.rest.security.CronappSecurity;
+import cronapi.swagger.CronappSwagger;
 
+
+
+import cronapp.framework.core.persistence.*;
 
 /**
 * Classe que representa a tabela APPLICATION_USER
@@ -16,10 +21,10 @@ import cronapi.rest.security.CronappSecurity;
 @jakarta.persistence.Entity
 @jakarta.persistence.Table(name = "\"APPLICATION_USER\"")
 @XmlRootElement
-@CronappSecurity
+@CronappSecurity(post = "Administrators", get = "Administrators", delete = "Administrators", put = "Administrators")
 @JsonFilter("app.entity.ApplicationUser")
+@CronappTable(role=CronappTableRole.ASSOCIATION_CLASS)
 public class ApplicationUser implements Serializable {
-
     /**
     * UID da classe, necessário na serialização
     * @generated
@@ -30,24 +35,28 @@ public class ApplicationUser implements Serializable {
     * @generated
     */
     @Id
+    @CronappColumn(attributeType="STRING", label="Id")
     @Column(name = "id", nullable = false, insertable=true, updatable=true)
         private java.lang.String id = UUID.randomUUID().toString().toUpperCase();
 
-    /**
-    * @generated
-    */
-    @ManyToOne
-    @JoinColumn(name = "application_id", nullable = true, referencedColumnName = "id", insertable = true, updatable = true, foreignKey = @ForeignKey(name = "APPLICATION_USER_APPLICATION_ID_APPLICATION_ID", foreignKeyDefinition = "FOREIGN KEY (application_id) REFERENCES APPLICATION (id) ON DELETE CASCADE"))
-        
-        private Application application;
 
     /**
     * @generated
     */
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "id", insertable = true, updatable = true, foreignKey = @ForeignKey(name = "APPLICATION_USER_USER_ID_USER_ID", foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES USER (id) ON DELETE CASCADE"))
+    @JoinColumn(name="application_id", nullable = true, referencedColumnName = "id", insertable=true, updatable=true)
+        
+        private Application application;
+
+
+    /**
+    * @generated
+    */
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = true, referencedColumnName = "id", insertable=true, updatable=true, foreignKey = @ForeignKey(name = "APPLICATION_USER_USER_ID_USER_ID", foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES USER (id) ON DELETE CASCADE"))
         
         private User user;
+
 
     /**
     * Construtor
@@ -61,8 +70,7 @@ public class ApplicationUser implements Serializable {
     * return id
     * @generated
     */
-    
-    public java.lang.String getId(){
+    public java.lang.String getId() {
         return this.id;
     }
 
@@ -71,7 +79,7 @@ public class ApplicationUser implements Serializable {
     * @param id id
     * @generated
     */
-    public ApplicationUser setId(java.lang.String id){
+    public ApplicationUser setId(java.lang.String id) {
         this.id = id;
         return this;
     }
@@ -80,8 +88,7 @@ public class ApplicationUser implements Serializable {
     * return application
     * @generated
     */
-    
-    public Application getApplication(){
+    public Application getApplication() {
         return this.application;
     }
 
@@ -90,7 +97,7 @@ public class ApplicationUser implements Serializable {
     * @param application application
     * @generated
     */
-    public ApplicationUser setApplication(Application application){
+    public ApplicationUser setApplication(Application application) {
         this.application = application;
         return this;
     }
@@ -99,8 +106,7 @@ public class ApplicationUser implements Serializable {
     * return user
     * @generated
     */
-    
-    public User getUser(){
+    public User getUser() {
         return this.user;
     }
 
@@ -109,7 +115,7 @@ public class ApplicationUser implements Serializable {
     * @param user user
     * @generated
     */
-    public ApplicationUser setUser(User user){
+    public ApplicationUser setUser(User user) {
         this.user = user;
         return this;
     }
